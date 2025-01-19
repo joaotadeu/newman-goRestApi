@@ -1,0 +1,1716 @@
+{
+	"info": {
+		"_postman_id": "6b43ba4b-1a7d-4b4d-acd3-88c88efaeff1",
+		"name": "Go REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28893248"
+	},
+	"item": [
+		{
+			"name": "API Users",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();",
+									"",
+									"if (responseData && responseData.id) {",
+									"    pm.collectionVariables.set(\"user_id\", responseData.id);",
+									"} else {",
+									"    console.error(\"ID não encontrado no response.\");",
+									"}",
+									"",
+									"// Validações",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response contains user ID\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"pm.test(\"Response contains all the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.id).to.exist;",
+									"    pm.expect(responseData.name).to.exist;",
+									"    pm.expect(responseData.gender).to.exist;",
+									"    pm.expect(responseData.email).to.exist;",
+									"    pm.expect(responseData.status).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Email is in a valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.email).to.be.a('string');",
+									"    pm.expect(responseData.email).to.match(/\\S+@\\S+\\.\\S+/);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomSuffix = Math.floor(Math.random() * 10000);",
+									"const randomName = `João Tadeu ${randomSuffix}`;",
+									"const randomEmail = `joao${randomSuffix}@example.com`;",
+									"",
+									"pm.collectionVariables.set(\"name\", randomName);",
+									"pm.collectionVariables.set(\"gender\", \"male\");",
+									"pm.collectionVariables.set(\"email\", randomEmail);",
+									"pm.collectionVariables.set(\"status\", \"active\");",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{name}}\",\n    \"gender\": \"{{gender}}\",\n    \"email\": \"{{email}}\",\n    \"status\": \"{{status}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Generated from cURL: curl -i -H \"Accept:application/json\" -H \"Content-Type:application/json\" -H \"Authorization: Bearer ACCESS-TOKEN\" -XPOST \"https://gorest.co.in/public/v2/users\" -d '{\"name\":\"Tenali Ramakrishna\", \"gender\":\"male\", \"email\":\"tenali.ramakrishna@15ce.com\", \"status\":\"active\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"JoaoT\",\n    \"email\": \"tadeu@exemplo.com\",\n    \"status\": \"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/{{user_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						},
+						"description": "Generated from cURL: curl -i -H \"Accept:application/json\" -H \"Content-Type:application/json\" -H \"Authorization: Bearer 1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e\" -XPATCH \"https://gorest.co.in/public/v2/users/7001835\" -d '{\"name\":\"Allasani Peddana\", \"email\":\"allasani.peddana@15ce.com\", \"status\":\"active\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "List users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validações //",
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response body is an array of objects\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user).to.be.an('object');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Each object in the response contains the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user).to.include.all.keys('id', 'name', 'email', 'gender', 'status');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Email in each object is in a valid format\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(user) {",
+									"        pm.expect(user.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, \"Email must be in a valid format\");",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response schema includes required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.include.all.keys('id', 'name', 'email', 'gender', 'status');",
+									"});",
+									"",
+									"pm.test(\"Email is in a valid format\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.email).to.match(/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/, \"Email should be in a valid format\");",
+									"});",
+									"",
+									"pm.test(\"Gender is a valid value\", function () {",
+									"    const validGenders = [\"male\", \"female\", \"other\"];",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.gender).to.exist.and.to.be.oneOf(validGenders);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});",
+									"",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Validate that the response body is empty\", function () {",
+									"    pm.expect(pm.response.text()).to.be.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e"
+							}
+						],
+						"url": {
+							"raw": "https://gorest.co.in/public/v2/users/{{user_id}}",
+							"protocol": "https",
+							"host": [
+								"gorest",
+								"co",
+								"in"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{user_id}}"
+							]
+						},
+						"description": "Generated from cURL: curl -i -H \"Accept:application/json\" -H \"Content-Type:application/json\" -H \"Authorization: Bearer 1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e\" -XDELETE \"https://gorest.co.in/public/v2/users/7001835\""
+					},
+					"response": []
+				},
+				{
+					"name": "List users query params after delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response message confirms deletion\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql(\"Resource not found\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the Content-Type header set to application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "API Posts",
+			"item": [
+				{
+					"name": "Create post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();",
+									"",
+									"if (responseData && responseData.id) {",
+									"    // Armazenar o valor do \"id\" na variável de Collection como \"post_id\"",
+									"    pm.collectionVariables.set(\"post_id\", responseData.id);",
+									"    console.log(\"Post ID armazenado:\", responseData.id);",
+									"} else {",
+									"    console.error(\"O campo 'id' não foi encontrado no response.\");",
+									"}",
+									"",
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// Parse a resposta como JSON",
+									"const createResponse = pm.response.json();",
+									"",
+									"// Armazenar valores enviados na criação",
+									"if (createResponse && createResponse.id) {",
+									"    pm.collectionVariables.set(\"created_post_id\", createResponse.id);",
+									"    pm.collectionVariables.set(\"created_title\", pm.variables.replaceIn(\"{{title}}\"));",
+									"    pm.collectionVariables.set(\"created_body\", pm.variables.replaceIn(\"{{body}}\"));",
+									"",
+									"    console.log(\"Post criado com sucesso:\");",
+									"    console.log(\"ID:\", createResponse.id);",
+									"    console.log(\"Title:\", pm.collectionVariables.get(\"created_title\"));",
+									"    console.log(\"Body:\", pm.collectionVariables.get(\"created_body\"));",
+									"} else {",
+									"    console.error(\"Erro: Não foi possível armazenar os valores do post criado.\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://gorest.co.in/public/v2/users',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Accept': 'application/json',",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer 1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            name: `João Tadeu ${Math.floor(Math.random() * 10000)}`,",
+									"            gender: 'male',",
+									"            email: `joao${Math.floor(Math.random() * 10000)}@example.com`,",
+									"            status: 'active'",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    if (err || res.code !== 201) {",
+									"        console.error('Erro ao criar usuário:', err || res.text());",
+									"    } else {",
+									"        // Armazena o user_id na variável de Collection",
+									"        const userId = res.json().id;",
+									"        pm.collectionVariables.set('user_id', userId);",
+									"        console.log('Novo user_id armazenado:', userId);",
+									"    }",
+									"});",
+									"",
+									"const Id = Math.floor(1000 + Math.random() * 9999);",
+									"const randomTitle = pm.variables.replaceIn(\"{{$randomLoremWords}}\");",
+									"const randomBody = pm.variables.replaceIn(\"{{$randomLoremSentences}}\");",
+									"",
+									"pm.collectionVariables.set(\"title\", randomTitle);",
+									"pm.collectionVariables.set(\"body\", randomBody);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": {{Id}},\n    \"user_id\": {{user_id}},\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 900ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"});",
+									"",
+									"const updateResponse = pm.response.json();",
+									"",
+									"const newTitle = pm.collectionVariables.get(\"new_title\");",
+									"const newBody = pm.collectionVariables.get(\"new_body\");",
+									"const expectedUserId = 7642208;",
+									"",
+									"pm.test(\"Title matches new_title\", function () {",
+									"    pm.expect(updateResponse.title).to.eql(newTitle);",
+									"});",
+									"",
+									"pm.test(\"Body matches new_body\", function () {",
+									"    pm.expect(updateResponse.body).to.eql(newBody);",
+									"});",
+									"",
+									"pm.test(\"User ID matches\", function () {",
+									"    pm.expect(updateResponse.user_id).to.eql(expectedUserId);",
+									"});",
+									"",
+									"pm.test(\"ID exists and is a number\", function () {",
+									"    pm.expect(updateResponse.id).to.be.a(\"number\");",
+									"    console.log(\"Response ID:\", updateResponse.id);",
+									"});",
+									"",
+									"console.log(\"Response completo:\", updateResponse);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Definir os valores como variáveis de coleção",
+									"pm.collectionVariables.set(\"new_title\", \"Clarus territo termes teres arguo quibusdam cohors.\");",
+									"pm.collectionVariables.set(\"new_body\", \"Advoco dolor sumo. Dicta debilito comburo. Sit tergiversatio convoco. Labore vinculum sunt. Uterque totus traho. Vulgo eum demens. Adeptio tero ipsum. Cupressus adsum autem. Cohibeo eligendi aegre. Aspicio traho summopere. Minus titulus tabella.\");",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 186844,\n    \"user_id\": 7642208,\n    \"title\": \"{{new_title}}\",\n    \"body\": \"{{new_body}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/posts/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test 1: Check if the status code is 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test 2: Verify that the response body is a non-empty array",
+									"pm.test(\"Response body is a non-empty array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array').that.is.not.empty;",
+									"});",
+									"",
+									"// Test 3: Verify that each post has an 'id' field",
+									"pm.test(\"Each post has an 'id' field\", function () {",
+									"    pm.response.json().forEach(function(post) {",
+									"        pm.expect(post).to.have.property('id');",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List posts by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test for response body properties",
+									"pm.test(\"Response body has id, user_id, title, and body properties\", function () {",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"    pm.response.to.have.jsonBody(\"user_id\");",
+									"    pm.response.to.have.jsonBody(\"title\");",
+									"    pm.response.to.have.jsonBody(\"body\");",
+									"});",
+									"",
+									"// Test for response time",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"// Test for response headers",
+									"pm.test(\"Response has 'Content-Type' header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/posts/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete posts by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"// Test for response headers",
+									"pm.test(\"Response headers have required fields\", function () {",
+									"    pm.response.to.have.header(\"Date\");",
+									"    pm.response.to.have.header(\"Connection\");",
+									"    pm.response.to.have.header(\"Cache-Control\");",
+									"    pm.response.to.have.header(\"feature-policy\");",
+									"    pm.response.to.have.header(\"referrer-policy\");",
+									"    pm.response.to.have.header(\"vary\");",
+									"    pm.response.to.have.header(\"x-content-type-options\");",
+									"    pm.response.to.have.header(\"x-download-options\");",
+									"    pm.response.to.have.header(\"x-frame-options\");",
+									"    pm.response.to.have.header(\"x-permitted-cross-domain-policies\");",
+									"    pm.response.to.have.header(\"x-ratelimit-limit\");",
+									"    pm.response.to.have.header(\"x-ratelimit-remaining\");",
+									"    pm.response.to.have.header(\"x-ratelimit-reset\");",
+									"    pm.response.to.have.header(\"x-request-id\");",
+									"    pm.response.to.have.header(\"x-runtime\");",
+									"    pm.response.to.have.header(\"x-xss-protection\");",
+									"    pm.response.to.have.header(\"cf-cache-status\");",
+									"    pm.response.to.have.header(\"Report-To\");",
+									"    pm.response.to.have.header(\"NEL\");",
+									"    pm.response.to.have.header(\"Server\");",
+									"    pm.response.to.have.header(\"CF-RAY\");",
+									"    pm.response.to.have.header(\"alt-svc\");",
+									"    pm.response.to.have.header(\"server-timing\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/posts/{{post_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List posts by id after delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response body contains message field\", function () {",
+									"    pm.response.to.have.jsonBody(\"message\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/posts/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "API Comments",
+			"item": [
+				{
+					"name": "Creat Comments",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://gorest.co.in/public/v2/users',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Accept': 'application/json',",
+									"        'Content-Type': 'application/json',",
+									"        'Authorization': 'Bearer 1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            name: `João Tadeu ${Math.floor(Math.random() * 10000)}`,",
+									"            gender: 'male',",
+									"            email: `joao${Math.floor(Math.random() * 10000)}@example.com`,",
+									"            status: 'active'",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    if (err || res.code !== 201) {",
+									"        console.error('Erro ao criar usuário:', err || res.text());",
+									"    } else {",
+									"        // Captura o user_id do usuário criado",
+									"        const userId = res.json().id;",
+									"        pm.collectionVariables.set('user_id', userId);",
+									"        console.log('Novo user_id armazenado:', userId);",
+									"",
+									"        // Chamar a segunda requisição após armazenar o user_id",
+									"        createPost(userId);",
+									"    }",
+									"});",
+									"",
+									"function createPost(userId) {",
+									"    pm.sendRequest({",
+									"        url: 'https://gorest.co.in/public/v2/posts',",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': 'Bearer 1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e'",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify({",
+									"                \"user_id\": userId,  // Utiliza o user_id da primeira requisição",
+									"                \"title\": \"animi laboriosam et\",",
+									"                \"body\": \"Dolor animi accusantium expedita quae optio corrupti veritatis deserunt nihil. Quia unde id porro eligendi officia.\"",
+									"            })",
+									"        }",
+									"    }, function (err, res) {",
+									"        if (err || res.code !== 201) {",
+									"            console.error('Erro ao criar post:', err || res.text());",
+									"        } else {",
+									"            // Captura o post_id e armazena para uso futuro",
+									"            const postId = res.json().id;",
+									"            pm.collectionVariables.set('post_id', postId);",
+									"            console.log('Novo post_id armazenado:', postId);",
+									"        }",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// Test for response body properties",
+									"pm.test(\"Response body has all required properties\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('id');",
+									"    pm.expect(pm.response.json()).to.have.property('post_id');",
+									"    pm.expect(pm.response.json()).to.have.property('name');",
+									"    pm.expect(pm.response.json()).to.have.property('email');",
+									"    pm.expect(pm.response.json()).to.have.property('body');",
+									"});",
+									"",
+									"// Test for response time",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"",
+									"const responseData = pm.response.json();",
+									"",
+									"if (responseData && responseData.id) {",
+									"    // Armazenar o valor do \"id\" na variável de Collection como \"post_id\"",
+									"    pm.collectionVariables.set(\"comment_id\", responseData.id);",
+									"    console.log(\"Commentes ID armazenado:\", responseData.id);",
+									"} else {",
+									"    console.error(\"O campo 'id' não foi encontrado no response.\");",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": {{user_id}},\n    \"post_id\": {{post_id}},\n    \"name\": \"{{name}}\",\n    \"email\": \"{{email}}\",\n    \"body\": \"{{body}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comments",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"new_email\", \"ms_namboothiri_krishna@huel-rutherford.test\");",
+									"pm.collectionVariables.set(\"new_body\", \"Advoco dolor sumo.\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const updateResponse = pm.response.json();",
+									"",
+									"const newEmail = pm.collectionVariables.get(\"new_email\");",
+									"const newBody = pm.collectionVariables.get(\"new_body\");",
+									"",
+									"pm.test(\"Title matches new_email\", function () {",
+									"    pm.expect(updateResponse.email).to.eql(newEmail);",
+									"});",
+									"",
+									"pm.test(\"Body matches new_body\", function () {",
+									"    pm.expect(updateResponse.body).to.eql(newBody);",
+									"});",
+									"",
+									"pm.test(\"ID exists and is a number\", function () {",
+									"    pm.expect(updateResponse.id).to.be.a(\"number\");",
+									"    console.log(\"Response ID:\", updateResponse.id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": {{id}},\n    \"post_id\": {{post_id}},\n    \"name\": \"diao\",\n    \"email\": \"{{new_email}}\",\n    \"body\": \"{{new_body}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{comment_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response body is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Response body contains specific fields for each object\", function () {",
+									"    pm.response.json().forEach(function (item) {",
+									"        pm.expect(item).to.have.property('id');",
+									"        pm.expect(item).to.have.property('post_id');",
+									"        pm.expect(item).to.have.property('name');",
+									"        pm.expect(item).to.have.property('email');",
+									"        pm.expect(item).to.have.property('body');",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List comments by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test 1: Verify the status code is 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test 2: Verify the response body has the correct structure and data types",
+									"pm.test(\"Response body has correct structure and data types\", function () {",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"    pm.response.to.have.jsonBody(\"post_id\");",
+									"    pm.response.to.have.jsonBody(\"name\");",
+									"    pm.response.to.have.jsonBody(\"email\");",
+									"    pm.response.to.have.jsonBody(\"body\");",
+									"    pm.expect(pm.response.json().id).to.be.a(\"number\");",
+									"    pm.expect(pm.response.json().post_id).to.be.a(\"number\");",
+									"    pm.expect(pm.response.json().name).to.be.a(\"string\");",
+									"    pm.expect(pm.response.json().email).to.be.a(\"string\");",
+									"    pm.expect(pm.response.json().body).to.be.a(\"string\");",
+									"});",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});",
+									"// Test 3: Verify the presence of specific headers in the response",
+									"pm.test(\"Specific headers are present in the response\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Cache-Control\");",
+									"    pm.response.to.have.header(\"Server\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{comment_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete comments by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"// Test for response time",
+									"pm.test(\"Response time is less than 1500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{comment_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List comments by id after delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"// Test for response body message",
+									"pm.test(\"Response body should contain message\", function () {",
+									"    pm.response.to.have.jsonBody(\"message\");",
+									"});",
+									"",
+									"// Test for response headers",
+									"pm.test(\"Response should have Content-Type header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API Todos",
+			"item": [
+				{
+					"name": "Creat todo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 70422,\n    \"user_id\": 7642203,\n    \"title\": \"Vero angelus cubicularis tui calco aut casso cum versus.\",\n    \"due_on\": \"2025-02-18T00:00:00.000+05:30\",\n    \"status\": \"completed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update todos",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 70422,\n    \"user_id\": 7642203,\n    \"title\": \"Vero angelus cubicularis tui calco aut casso cum versus.\",\n    \"due_on\": \"2025-02-18T00:00:00.000+05:30\",\n    \"status\": \"completed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "70426"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List todos by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "70426"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List todos by id Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "70426"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List todos by id after delete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "70426"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": ""
+		},
+		{
+			"key": "userIds",
+			"value": ""
+		},
+		{
+			"key": "name",
+			"value": ""
+		},
+		{
+			"key": "gender",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "status",
+			"value": ""
+		},
+		{
+			"key": "Id",
+			"value": ""
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "title",
+			"value": ""
+		},
+		{
+			"key": "body",
+			"value": ""
+		},
+		{
+			"key": "post_id",
+			"value": ""
+		},
+		{
+			"key": "created_title",
+			"value": ""
+		},
+		{
+			"key": "created_body",
+			"value": ""
+		},
+		{
+			"key": "created_post_id",
+			"value": ""
+		},
+		{
+			"key": "new_title",
+			"value": ""
+		},
+		{
+			"key": "new_body",
+			"value": ""
+		},
+		{
+			"key": "new_email",
+			"value": ""
+		},
+		{
+			"key": "comment_id",
+			"value": ""
+		}
+	]
+}
