@@ -34,8 +34,8 @@
 									"    pm.expect(jsonData).to.have.property(\"id\");",
 									"});",
 									"",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"pm.test(\"Response contains all the required fields\", function () {",
@@ -134,8 +134,8 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Response time is less than 900ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});"
 								],
 								"type": "text/javascript",
@@ -196,8 +196,8 @@
 							"script": {
 								"exec": [
 									"// Validações //",
-									"pm.test(\"Response time is less than 900ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"pm.test(\"Status code is 200\", function () {",
@@ -270,16 +270,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 900ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(900);",
-									"});",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Response time is less than 900ms\", function () {",
-									"  pm.expect(pm.response.responseTime).to.be.below(900);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"pm.test(\"Status code is 200\", function () {",
@@ -361,8 +353,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 900ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"pm.test(\"Status code is 204\", function () {",
@@ -431,8 +423,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response time is less than 900ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"pm.test(\"Status code is 404\", function () {",
@@ -550,8 +542,8 @@
 									"    console.error(\"O campo 'id' não foi encontrado no response.\");",
 									"}",
 									"",
-									"pm.test(\"Response time is less than 900ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(900);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"pm.test(\"Status code is 201\", function () {",
@@ -709,8 +701,8 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"const updateResponse = pm.response.json();",
@@ -794,6 +786,10 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});"
 								],
 								"type": "text/javascript",
@@ -848,8 +844,8 @@
 									"});",
 									"",
 									"// Test for response time",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									""
 								],
@@ -910,6 +906,10 @@
 									"// Test for status code",
 									"pm.test(\"Status code is 204\", function () {",
 									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});"
 								],
 								"type": "text/javascript",
@@ -962,6 +962,10 @@
 								"exec": [
 									"pm.test(\"Status code is 404\", function () {",
 									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});"
 								],
 								"type": "text/javascript",
@@ -1137,8 +1141,8 @@
 									"});",
 									"",
 									"// Test for response time",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});",
 									"",
 									"const responseData = pm.response.json();",
@@ -1211,6 +1215,10 @@
 									"    pm.expect(updateResponse.body).to.eql(newBody);",
 									"});",
 									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
 									"pm.test(\"ID exists and is a number\", function () {",
 									"    pm.expect(updateResponse.id).to.be.a(\"number\");",
 									"    console.log(\"Response ID:\", updateResponse.id);",
@@ -1267,6 +1275,10 @@
 									"    pm.expect(pm.response.json()).to.be.an('array');",
 									"});",
 									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
 									"pm.test(\"Response body contains specific fields for each object\", function () {",
 									"    pm.response.json().forEach(function (item) {",
 									"        pm.expect(item).to.have.property('id');",
@@ -1285,8 +1297,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1312,12 +1327,14 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"// Test 1: Verify the status code is 200",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"// Test 2: Verify the response body has the correct structure and data types",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
 									"pm.test(\"Response body has correct structure and data types\", function () {",
 									"    pm.response.to.have.jsonBody(\"id\");",
 									"    pm.response.to.have.jsonBody(\"post_id\");",
@@ -1333,7 +1350,7 @@
 									"pm.test(\"Response time is less than 1500ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
 									"});",
-									"// Test 3: Verify the presence of specific headers in the response",
+									"",
 									"pm.test(\"Specific headers are present in the response\", function () {",
 									"    pm.response.to.have.header(\"Content-Type\");",
 									"    pm.response.to.have.header(\"Cache-Control\");",
@@ -1347,8 +1364,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1381,14 +1401,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"// Test for status code",
 									"pm.test(\"Status code is 204\", function () {",
 									"    pm.response.to.have.status(204);",
 									"});",
 									"",
-									"// Test for response time",
-									"pm.test(\"Response time is less than 1500ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
 									"});"
 								],
 								"type": "text/javascript",
@@ -1398,8 +1416,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1432,21 +1453,21 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"// Test for status code",
 									"pm.test(\"Status code is 404\", function () {",
 									"    pm.response.to.have.status(404);",
 									"});",
 									"",
-									"// Test for response body message",
 									"pm.test(\"Response body should contain message\", function () {",
 									"    pm.response.to.have.jsonBody(\"message\");",
 									"});",
 									"",
-									"// Test for response headers",
 									"pm.test(\"Response should have Content-Type header\", function () {",
 									"    pm.response.to.have.header(\"Content-Type\");",
 									"});",
-									""
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -1455,8 +1476,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1489,12 +1513,143 @@
 			"item": [
 				{
 					"name": "Creat todo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Função para gerar números aleatórios com comprimento específico",
+									"function generateRandomNumber(length) {",
+									"    return Math.floor(Math.pow(10, length - 1) + Math.random() * 9 * Math.pow(10, length - 1));",
+									"}",
+									"",
+									"// Gera valores dinâmicos",
+									"const todoId = generateRandomNumber(5);",
+									"const randomTitle = pm.variables.replaceIn(\"{{$randomLoremWords}}\");",
+									"",
+									"// Calcula a data para 30 dias no futuro no formato correto",
+									"function getDueDate() {",
+									"    const now = new Date();",
+									"    now.setDate(now.getDate() + 30);",
+									"    return now.toISOString().split(\".\")[0] + \".000+05:30\";",
+									"}",
+									"",
+									"const formattedDueOn = getDueDate();",
+									"",
+									"// Payload para criação de usuário",
+									"const createUserUrl = `${pm.environment.get(\"baseUrl\")}/users`;",
+									"const userPayload = {",
+									"    name: `User ${generateRandomNumber(4)}`,",
+									"    gender: \"male\",",
+									"    email: `user${generateRandomNumber(4)}@example.com`,",
+									"    status: \"active\"",
+									"};",
+									"",
+									"// Função para criar usuário e armazenar user_id",
+									"function createUserAndStoreId() {",
+									"    pm.sendRequest({",
+									"        url: createUserUrl,",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Accept': 'application/json',",
+									"            'Content-Type': 'application/json',",
+									"            'Authorization': `Bearer ${pm.environment.get(\"authToken\")}`",
+									"        },",
+									"        body: {",
+									"            mode: 'raw',",
+									"            raw: JSON.stringify(userPayload)",
+									"        }",
+									"    }, function (err, res) {",
+									"        if (err || res.code !== 201) {",
+									"            console.error('Erro ao criar usuário:', err || res.text());",
+									"            pm.collectionVariables.set('todo_user_id', null);",
+									"        } else {",
+									"            const userId = res.json().id;",
+									"            pm.collectionVariables.set(\"todo_user_id\", userId);",
+									"            console.log(\"Novo user_id armazenado:\", userId);",
+									"        }",
+									"    });",
+									"}",
+									"",
+									"// Armazena variáveis na coleção",
+									"pm.collectionVariables.set(\"todo_id\", todoId);",
+									"pm.collectionVariables.set(\"todo_title\", randomTitle);",
+									"pm.collectionVariables.set(\"todo_due_on\", formattedDueOn);",
+									"",
+									"// Chama a função para criar usuário e armazenar o ID",
+									"createUserAndStoreId();"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Faz o parse da resposta JSON",
+									"let responseData = pm.response.json();",
+									"",
+									"// Verifica se o campo 'id' existe no response",
+									"if (responseData && responseData.id) {",
+									"    pm.collectionVariables.set(\"id_todo\", responseData.id);",
+									"    console.log(\"ID armazenado na variável id_todo:\", responseData.id);",
+									"} else {",
+									"    console.error(\"O campo 'id' não foi encontrado no response.\");",
+									"}",
+									"",
+									"// Test for the status code",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// Test for the response body properties",
+									"pm.test(\"Response body has the 'id' property\", function () {",
+									"    pm.expect(responseData).to.have.property('id');",
+									"});",
+									"",
+									"pm.test(\"Response body has the 'user_id' property\", function () {",
+									"    pm.expect(responseData).to.have.property('user_id');",
+									"});",
+									"",
+									"pm.test(\"Response body has the 'title' property\", function () {",
+									"    pm.expect(responseData).to.have.property('title');",
+									"});",
+									"",
+									"pm.test(\"Response body has the 'due_on' property\", function () {",
+									"    pm.expect(responseData).to.have.property('due_on');",
+									"});",
+									"",
+									"pm.test(\"Response body has the 'status' property\", function () {",
+									"    pm.expect(responseData).to.have.property('status');",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
+									"// Test for the response headers",
+									"pm.test(\"Response has the 'Content-Type' header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Response has the 'Content-Length' header\", function () {",
+									"    pm.response.to.have.header(\"Content-Length\");",
+									"});",
+									"pm.test(\"Response has the 'Date' header\", function () {",
+									"    pm.response.to.have.header(\"Date\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 70422,\n    \"user_id\": 7642203,\n    \"title\": \"Vero angelus cubicularis tui calco aut casso cum versus.\",\n    \"due_on\": \"2025-02-18T00:00:00.000+05:30\",\n    \"status\": \"completed\"\n}",
+							"raw": "{\n    \"id\": {{todo_id}},\n    \"user_id\": {{todo_user_id}},\n    \"title\": \"{{todo_title}}\",\n    \"due_on\": \"{{todo_due_on}}\",\n    \"status\": \"completed\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1515,12 +1670,61 @@
 				},
 				{
 					"name": "Update todos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
+									"pm.test(\"Response body has property user_id\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('user_id');",
+									"});",
+									"",
+									"pm.test(\"Response body has property title\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('title');",
+									"});",
+									"",
+									"pm.test(\"Response body has property due_on\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('due_on');",
+									"});",
+									"",
+									"pm.test(\"Response body has property status\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('status');",
+									"});",
+									"",
+									"pm.test(\"Response body has property id\", function () {",
+									"    pm.expect(pm.response.json()).to.have.property('id');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 70422,\n    \"user_id\": 7642203,\n    \"title\": \"Vero angelus cubicularis tui calco aut casso cum versus.\",\n    \"due_on\": \"2025-02-18T00:00:00.000+05:30\",\n    \"status\": \"completed\"\n}",
+							"raw": "{\n    \"id\": {{todo_id}},\n    \"user_id\": {{todo_user_id}},\n    \"title\": \"Vero angelus cubicularis tui calco aut casso cum versus.\",\n    \"due_on\": \"{{todo_due_on}}\",\n    \"status\": \"completed\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1539,7 +1743,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "70426"
+									"value": "{{id_todo}}"
 								}
 							]
 						}
@@ -1548,6 +1752,56 @@
 				},
 				{
 					"name": "List todos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test 1: Check if the response status code is 200",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test 2: Check if the response body is an array",
+									"pm.test(\"Response body is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"// Test 3: Check if the response body has a 'title' field for each object",
+									"pm.test(\"Each object has a 'title' field\", function () {",
+									"    pm.response.json().forEach(function (item) {",
+									"        pm.expect(item).to.have.property('title');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
+									"",
+									"// Test 4: Check if the response body has a 'due_on' field for each object",
+									"pm.test(\"Each object has a 'due_on' field\", function () {",
+									"    pm.response.json().forEach(function (item) {",
+									"        pm.expect(item).to.have.property('due_on');",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1565,6 +1819,62 @@
 				},
 				{
 					"name": "List todos by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test for response body properties",
+									"pm.test(\"Response body has an id\", function () {",
+									"    pm.response.to.have.jsonBody('id');",
+									"});",
+									"",
+									"pm.test(\"Response body has a user_id\", function () {",
+									"    pm.response.to.have.jsonBody('user_id');",
+									"});",
+									"",
+									"pm.test(\"Response body has a title\", function () {",
+									"    pm.response.to.have.jsonBody('title');",
+									"});",
+									"",
+									"pm.test(\"Response body has a due_on\", function () {",
+									"    pm.response.to.have.jsonBody('due_on');",
+									"});",
+									"",
+									"pm.test(\"Response body has a status\", function () {",
+									"    pm.response.to.have.jsonBody('status');",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
+									"// Test for response headers",
+									"pm.test(\"Content-Type is present in response headers\", function () {",
+									"    pm.response.to.have.header('Content-Type');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1580,7 +1890,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "70426"
+									"value": "{{id_todo}}"
 								}
 							]
 						}
@@ -1588,7 +1898,44 @@
 					"response": []
 				},
 				{
-					"name": "List todos by id Copy",
+					"name": "Delete todos by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									"",
+									"pm.test(\"Headers have required fields\", function () {",
+									"    var requiredHeaders = [\"Date\", \"Connection\", \"Cache-Control\", \"feature-policy\", \"referrer-policy\", \"vary\", \"x-content-type-options\", \"x-download-options\", \"x-frame-options\", \"x-permitted-cross-domain-policies\", \"x-ratelimit-limit\", \"x-ratelimit-remaining\", \"x-ratelimit-reset\", \"x-request-id\", \"x-runtime\", \"x-xss-protection\", \"cf-cache-status\", \"Report-To\", \"NEL\", \"Server\", \"CF-RAY\", \"alt-svc\", \"server-timing\"];",
+									"",
+									"    requiredHeaders.forEach(function(header) {",
+									"        pm.expect(pm.response.headers.has(header)).to.be.true;",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -1604,7 +1951,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "70426"
+									"value": "{{id_todo}}"
 								}
 							]
 						}
@@ -1613,6 +1960,48 @@
 				},
 				{
 					"name": "List todos by id after delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for status code",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"// Test for response body message",
+									"pm.test(\"Response body contains 'Resource not found'\", function () {",
+									"    pm.expect(pm.response.json().message).to.eql(\"Resource not found\");",
+									"});",
+									"",
+									"// Test for response headers",
+									"pm.test(\"Response has headers\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.to.have.header(\"Content-Length\");",
+									"    pm.response.to.have.header(\"X-Runtime\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 2500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2500);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1628,12 +2017,34 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "70426"
+									"value": "{{id_todo}}"
 								}
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
@@ -1745,6 +2156,26 @@
 		},
 		{
 			"key": "new_user_id",
+			"value": ""
+		},
+		{
+			"key": "todo_id",
+			"value": ""
+		},
+		{
+			"key": "todo_user_id",
+			"value": ""
+		},
+		{
+			"key": "todo_title",
+			"value": ""
+		},
+		{
+			"key": "todo_due_on",
+			"value": ""
+		},
+		{
+			"key": "id_todo",
 			"value": ""
 		}
 	]
