@@ -583,23 +583,13 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"if (!token) {",
-									"    console.error(\"Token de autenticação não encontrado! Verifique o ambiente ou coleção.\");",
-									"} else {",
-									"    // Adiciona o token manualmente no cabeçalho da requisição",
-									"    pm.request.headers.add({",
-									"        key: \"Authorization\",",
-									"        value: `Bearer ${token}`",
-									"    });",
-									"    console.log(\"Token de autenticação utilizado:\", token);",
-									"}",
 									"pm.sendRequest({",
 									"    url: 'https://gorest.co.in/public/v2/users',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'Accept': 'application/json',",
 									"        'Content-Type': 'application/json',",
-									"        'Authorization': `Bearer ${pm.environment.get('authToken') || pm.collectionVariables.get('authToken')}`",
+									"        'Authorization': `Bearer 1d0c771eaa4012ddcfd8abe3b06a478e27d8b8f976310718134b6cfcf21fe88e`",
 									"    },",
 									"    body: {",
 									"        mode: 'raw',",
@@ -611,20 +601,57 @@
 									"        })",
 									"    }",
 									"}, function (err, res) {",
-									"    if (err || res.code !== 201) {",
-									"        console.error('Erro ao criar usuário:', err || res.text());",
-									"        pm.collectionVariables.set('new_user_id', null);  // Define null em caso de erro",
+									"    if (err) {",
+									"        console.error('Erro ao criar usuário:', err);",
+									"        pm.collectionVariables.set('new_user_id', null);",
 									"    } else {",
-									"        const userId = res.json().id;",
-									"        pm.collectionVariables.set('new_user_id', userId);",
-									"        console.log('Novo user_id armazenado com sucesso:', userId);",
+									"        let jsonResponse;",
+									"        try {",
+									"            jsonResponse = res.json();",
+									"            if (res.code === 201 && jsonResponse.id) {",
+									"                pm.collectionVariables.set('new_user_id', jsonResponse.id);",
+									"                console.log('Novo user_id armazenado com sucesso:', jsonResponse.id);",
+									"            } else {",
+									"                console.error('Resposta inesperada:', jsonResponse);",
+									"                pm.collectionVariables.set('new_user_id', null);",
+									"            }",
+									"        } catch (e) {",
+									"            console.error('Erro ao processar a resposta:', e);",
+									"            pm.collectionVariables.set('new_user_id', null);",
+									"        }",
 									"    }",
 									"});",
 									"",
-									"// Obtém o token da variável de ambiente ou de coleção",
 									"let token = pm.environment.get('authToken') || pm.collectionVariables.get('authToken');",
 									"",
-									"console.log(\"Token de autenticação atual:\", pm.variables.get(\"authToken\") || pm.collectionVariables.get(\"authToken\"));"
+									"if (!token) {",
+									"    throw new Error(\"Token de autenticação não encontrado! Verifique o ambiente ou coleção.\");",
+									"}",
+									"",
+									"pm.request.headers.add({",
+									"    key: \"Authorization\",",
+									"    value: `Bearer ${token}`",
+									"});",
+									"console.log(\"Token aplicado à requisição:\", token);",
+									"",
+									"// Definir um ID fixo ou gerar um aleatório",
+									"let id = Math.floor(Math.random() * 100000);  // Gera um número aleatório de até 5 dígitos",
+									"",
+									"// Gera um título aleatório com 3 palavras de Lorem Ipsum",
+									"let title = pm.variables.replaceIn('{{$randomLoremWords}}');",
+									"",
+									"// Gera um corpo aleatório com um parágrafo curto",
+									"let body = pm.variables.replaceIn('{{$randomLoremParagraph}}');",
+									"",
+									"// Armazenar as variáveis para uso na requisição",
+									"pm.collectionVariables.set(\"id\", id);",
+									"pm.collectionVariables.set(\"title\", title);",
+									"pm.collectionVariables.set(\"body\", body);",
+									"",
+									"// Logs para depuração no console do Postman",
+									"console.log(\"ID gerado:\", id);",
+									"console.log(\"Title gerado:\", title);",
+									"console.log(\"Body gerado:\", body);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -632,11 +659,27 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": {{Id}},\n    \"user_id\": {{new_user_id}},\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\"\n}",
+							"raw": "{\n     \"id\": {{id}},\n    \"user_id\": {{new_user_id}},\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -702,6 +745,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -759,6 +812,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -806,6 +869,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -855,6 +928,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -897,6 +980,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
