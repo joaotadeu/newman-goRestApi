@@ -26,7 +26,7 @@ jobs:
         run: npm install -g newman
 
       - name: Executar testes do Postman
-        run: newman run Go_REST_API.postman_collection.json -e Go_REST_API.postman_environment.json --reporters cli,html --reporter-html-export newman-report.html
+        run: newman run postman/Go_REST_API.postman_collection.json -e postman/Go_REST_API.postman_environment.json --reporters cli,html --reporter-html-export newman-report.html
 
       - name: Upload do relatório de testes
         uses: actions/upload-artifact@v3
